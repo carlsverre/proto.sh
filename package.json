@@ -1,0 +1,29 @@
+{
+  "name": "proto-sh",
+  "description": "https://www.proto.sh",
+  "version": "1.0.0",
+  "author": "Carl Sverre <accounts@carlsverre.com>",
+  "dependencies": {
+    "autoprefixer": "7.1.4",
+    "gatsby": "1.9.45",
+    "gatsby-link": "1.6.17",
+    "gatsby-plugin-google-fonts": "0.0.3",
+    "gatsby-plugin-postcss-sass": "1.0.12",
+    "gatsby-plugin-react-helmet": "1.0.5",
+    "minireset.css": "0.0.3",
+    "noise": "0.0.0",
+    "noisejs": "2.1.0"
+  },
+  "license": "MIT",
+  "main": "n/a",
+  "scripts": {
+    "build": "gatsby build",
+    "develop": "gatsby develop",
+    "serve": "gatsby serve",
+    "format": "prettier --trailing-comma es5 --no-semi --single-quote --write 'src/**/*.js'",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "prettier": "^1.7.4"
+  }
+}
