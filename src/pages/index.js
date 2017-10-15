@@ -4,12 +4,6 @@ import tinycolor from "tinycolor2";
 import { scaleLinear, scaleQuantize } from "d3-scale";
 
 const noise = new SimplexNoise(Math.random);
-const noiseToUnitRange = scaleLinear()
-    .domain([-1, 1])
-    .range([0, 1]);
-const noiseToHue = scaleLinear()
-    .domain([-1, 1])
-    .range([330, 430]);
 
 const colors = [
     "#1DB0FD",
@@ -29,12 +23,19 @@ const colors = [
     "#4A5785",
 ];
 
+const unitToRad = scaleLinear()
+    .domain([0, 1])
+    .range([-1 * Math.PI, Math.PI]);
+
 const noiseToColor = scaleQuantize()
     .domain([0, 256])
     .range(colors);
 
-const TIME_DELTA = 0.002;
-const TARGET_FRAME_TIME = 30; // ms
+const TIME_DELTA = 0.003;
+const TARGET_FRAME_TIME = 50; // ms
+
+// these are adjusted by updatePerf() in order to render close to the
+// TARGET_FRAME_TIME
 let PIXEL_WIDTH = 5;
 let PIXEL_HEIGHT = 5;
 
@@ -54,13 +55,17 @@ export default class IndexPage extends React.Component {
     constructor(props) {
         super(props);
         this.state = { width: 0, height: 0 };
-        this.time = Math.floor(Math.random() * 1000);
+        this.time = Math.random();
         this.lastFrame = +new Date();
         this.frameTimes = [];
 
         // this bool is set to false when this component unmounts in order to
         // kill the draw loop
         this.shouldDraw = true;
+
+        this.periodXBase = 3 - Math.random() * 6;
+        this.periodYBase = 3 - Math.random() * 6;
+        console.log("Period bases: ", this.periodXBase, this.periodYBase);
     }
 
     componentDidMount() {
@@ -90,11 +95,9 @@ export default class IndexPage extends React.Component {
         if (frameTime < TARGET_FRAME_TIME - 5) {
             PIXEL_WIDTH = Math.max(3, PIXEL_WIDTH - 1);
             PIXEL_HEIGHT = Math.max(3, PIXEL_HEIGHT - 1);
-            console.log("-", frameTime, PIXEL_WIDTH, PIXEL_HEIGHT);
         } else if (frameTime > TARGET_FRAME_TIME + 5) {
-            PIXEL_WIDTH = Math.min(50, PIXEL_WIDTH + 1);
-            PIXEL_HEIGHT = Math.min(50, PIXEL_HEIGHT + 1);
-            console.log("+", frameTime, PIXEL_WIDTH, PIXEL_HEIGHT);
+            PIXEL_WIDTH = Math.min(30, PIXEL_WIDTH + 1);
+            PIXEL_HEIGHT = Math.min(30, PIXEL_HEIGHT + 1);
         }
     };
 
@@ -115,13 +118,14 @@ export default class IndexPage extends React.Component {
 
         ctx.clearRect(0, 0, width, height);
 
-        // xPeriod and yPeriod together define the angle of the lines
-        // xPeriod and yPeriod both 0 ==> it becomes a normal clouds or turbulence pattern
-        const xPeriod = (this.time * 10) % 10; // defines repetition of marble lines in x direction
-        const yPeriod = (this.time * 5) % 10; // defines repetition of marble lines in y direction
-        //turbPower = 0 ==> it becomes a normal sine pattern
-        const turbPower = 0.5; //makes twists
-        const turbSize = 64; //initial size of the turbulence
+        const periodBase = 3;
+        const period = unitToRad(this.time % 1);
+
+        const xPeriod = this.periodXBase + Math.cos(period);
+        const yPeriod = this.periodYBase * Math.sin(period);
+
+        const turbPower = 0.6; // makes twists
+        const turbSize = 64; // initial size of the turbulence
 
         let color = { r: 0, g: 0, b: 0 };
 
