@@ -5,14 +5,15 @@
   "author": "Carl Sverre <accounts@carlsverre.com>",
   "dependencies": {
     "autoprefixer": "7.1.4",
+    "d3-scale": "1.0.6",
     "gatsby": "1.9.45",
     "gatsby-link": "1.6.17",
     "gatsby-plugin-google-fonts": "0.0.3",
     "gatsby-plugin-postcss-sass": "1.0.12",
     "gatsby-plugin-react-helmet": "1.0.5",
     "minireset.css": "0.0.3",
-    "noise": "0.0.0",
-    "noisejs": "2.1.0"
+    "simplex-noise": "2.3.0",
+    "tinycolor2": "1.4.1"
   },
   "license": "MIT",
   "main": "n/a",
