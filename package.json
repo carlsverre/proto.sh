@@ -1,30 +1,26 @@
 {
-  "name": "proto-sh",
-  "description": "https://www.proto.sh",
+  "name": "proto.sh",
   "version": "1.0.0",
-  "author": "Carl Sverre <accounts@carlsverre.com>",
+  "description": "https://www.proto.sh",
+  "main": "index.js",
   "dependencies": {
-    "autoprefixer": "7.1.4",
-    "d3-scale": "1.0.6",
-    "gatsby": "1.9.45",
-    "gatsby-link": "1.6.17",
-    "gatsby-plugin-google-fonts": "0.0.3",
-    "gatsby-plugin-postcss-sass": "1.0.12",
-    "gatsby-plugin-react-helmet": "1.0.5",
-    "minireset.css": "0.0.3",
-    "simplex-noise": "2.3.0",
-    "tinycolor2": "1.4.1"
+    "d3-scale": "^3.2.1",
+    "gatsby": "^2.22.15",
+    "gatsby-plugin-react-helmet": "^3.3.2",
+    "react": "^16.13.1",
+    "react-helmet": "^6.0.0",
+    "simplex-noise": "^2.4.0",
+    "tinycolor2": "^1.4.1"
   },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/carlsverre/proto.sh.git"
+  },
+  "author": "Carl Sverre",
   "license": "MIT",
-  "main": "n/a",
-  "scripts": {
-    "build": "gatsby build",
-    "develop": "gatsby develop",
-    "serve": "gatsby serve",
-    "format": "prettier --trailing-comma es5 --no-semi --single-quote --write 'src/**/*.js'",
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "bugs": {
+    "url": "https://github.com/carlsverre/proto.sh/issues"
   },
-  "devDependencies": {
-    "prettier": "^1.7.4"
-  }
+  "homepage": "https://github.com/carlsverre/proto.sh#readme"
 }
