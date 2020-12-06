@@ -1,26 +1,46 @@
 {
-  "name": "proto.sh",
-  "version": "1.0.0",
-  "description": "https://www.proto.sh",
-  "main": "index.js",
-  "dependencies": {
-    "d3-scale": "^3.2.1",
-    "gatsby": "^2.22.15",
-    "gatsby-plugin-react-helmet": "^3.3.2",
-    "react": "^16.13.1",
-    "react-helmet": "^6.0.0",
-    "simplex-noise": "^2.4.0",
-    "tinycolor2": "^1.4.1"
-  },
-  "devDependencies": {},
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/carlsverre/proto.sh.git"
-  },
-  "author": "Carl Sverre",
+  "version": "0.1.0",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/carlsverre/proto.sh/issues"
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "engines": {
+    "node": ">=10"
   },
-  "homepage": "https://github.com/carlsverre/proto.sh#readme"
+  "scripts": {
+    "start": "parcel www/index.html",
+    "build": "parcel build www/index.html",
+    "lint": "tsdx lint"
+  },
+  "peerDependencies": {
+    "react": ">=17"
+  },
+  "prettier": {
+    "semi": true,
+    "trailingComma": "es5",
+    "tabWidth": 4
+  },
+  "name": "proto",
+  "author": "Carl Sverre",
+  "devDependencies": {
+    "@types/react": "^17.0.0",
+    "@types/react-dom": "^17.0.0",
+    "@types/tinycolor2": "^1.4.2",
+    "@types/d3-scale": "^3.2.1",
+    "parcel": "^1.12.4",
+    "tsdx": "^0.14.1",
+    "tslib": "^2.0.3",
+    "typescript": "^4.1.2",
+    "npm-check-updates": "^10.2.3"
+  },
+  "dependencies": {
+    "d3-scale": "^3.2.3",
+    "node-pid-controller": "^1.0.1",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "simplex-noise": "^2.4.0"
+  }
 }
