@@ -37,6 +37,8 @@
     "npm-check-updates": "^10.2.3"
   },
   "dependencies": {
+    "@types/d3-ease": "^2.0.0",
+    "d3-ease": "^2.0.0",
     "d3-scale": "^3.2.3",
     "node-pid-controller": "^1.0.1",
     "react": "^17.0.1",
