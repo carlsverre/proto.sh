@@ -8,5 +8,7 @@ export interface Scene {
 
 import * as TrailsScene from "./trails";
 import * as WavesScene from "./waves";
+// not included for now due to resource cost
+//import * as WallpaperScene from "./wallpaper";
 
 export const scenes: Scene[] = [TrailsScene, WavesScene];
