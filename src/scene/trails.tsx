@@ -6,6 +6,8 @@ import { Memo, initMemo, stepMemo } from "../util/memo";
 const TRAIL_LENGTH = 1000;
 const BACKGROUND = colorsRGB[colorsRGB.length - 1];
 
+export const name = "trails";
+
 type State = {
     xs: number[];
     ys: number[];

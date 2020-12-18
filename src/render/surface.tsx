@@ -1,14 +1,15 @@
 import * as React from "react";
 import { useRef, useEffect } from "react";
-import { useWindowSize } from "../hook/useWindowSize";
+import { useWindowSize, Size } from "../hook/useWindowSize";
 import { Scene } from "../scene";
 
-export const Surface = ({ scene }: { scene: Scene }) => {
+export const Surface = ({ scene, size }: { scene: Scene; size?: Size }) => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const windowSize = useWindowSize();
+    const surfaceSize = size || windowSize;
 
     useEffect(() => {
-        if (canvasRef.current && windowSize) {
+        if (canvasRef.current && surfaceSize) {
             const canvas = canvasRef.current;
             const ctx = canvas.getContext("2d");
             if (ctx) {
@@ -35,6 +36,6 @@ export const Surface = ({ scene }: { scene: Scene }) => {
     }, [canvasRef, scene]);
 
     return (
-        <canvas ref={canvasRef} className="render-surface" {...windowSize} />
+        <canvas ref={canvasRef} className="render-surface" {...surfaceSize} />
     );
 };

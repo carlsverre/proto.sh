@@ -29,6 +29,8 @@ const turbulence = (x: number, y: number, size: number): number => {
     return (128.0 * value) / initialSize;
 };
 
+export const name = "waves";
+
 type State = {
     time: number;
     lastFrame: number;

@@ -4,6 +4,8 @@ import SimplexNoise from "simplex-noise";
 import { Memo, initMemo, stepMemo } from "../util/memo";
 import { scaleLinear } from "d3-scale";
 
+export const name = "wallpaper";
+
 type State = {
     noise: SimplexNoise;
     noiseMemo: Memo<ImageData>;
