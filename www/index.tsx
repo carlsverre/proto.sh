@@ -34,7 +34,13 @@ const App = () => {
 
     useEffect(() => {
         let i = 0;
-        const handler = () => {
+        const handler = (evt: MouseEvent) => {
+            if (evt.button !== 0) {
+                return;
+            }
+
+            evt.preventDefault();
+
             let nextScene = scenes[0];
             while (true) {
                 nextScene = scenes[++i % scenes.length];
