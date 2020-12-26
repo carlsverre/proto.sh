@@ -2,13 +2,16 @@ import { colorsRGB } from "./colors";
 import { RGB, rgbToString } from "../util/color";
 import SimplexNoise from "simplex-noise";
 import { Memo, initMemo, stepMemo } from "../util/memo";
+import { Env } from "../render";
 
 const TRAIL_LENGTH = 1000;
 const BACKGROUND = colorsRGB[colorsRGB.length - 1];
 
 export const name = "trails";
+export const engine = "canvas2d";
 
 type State = {
+    ctx: CanvasRenderingContext2D;
     xs: number[];
     ys: number[];
     colors: RGB[];
@@ -22,19 +25,20 @@ type State = {
 const randomColor = (): RGB =>
     colorsRGB[Math.floor(Math.random() * colorsRGB.length)];
 
-export const init = (ctx: CanvasRenderingContext2D): State => ({
+export const setup = (env: Env, ctx: CanvasRenderingContext2D): State => ({
+    ctx: ctx,
     xs: [],
     ys: [],
     colors: [],
-    x: ctx.canvas.clientWidth / 2,
-    y: ctx.canvas.clientHeight / 2,
+    x: env.width / 2,
+    y: env.height / 2,
     d: 0,
     noise: new SimplexNoise(Math.random),
     noiseMemo: initMemo(),
 });
 
-export const step = (ctx: CanvasRenderingContext2D, state: State) => {
-    const [width, height] = [ctx.canvas.clientWidth, ctx.canvas.clientHeight];
+export const update = (env: Env, _: number, state: State) => {
+    const { width, height } = env;
 
     if (Math.random() >= 0.95) {
         state.d = (state.d + (Math.random() > 0.5 ? 1 : -1)) % 360;
@@ -55,11 +59,9 @@ export const step = (ctx: CanvasRenderingContext2D, state: State) => {
         state.ys = state.ys.slice(cut);
         state.colors = state.colors.slice(cut);
     }
-};
 
-export const draw = (ctx: CanvasRenderingContext2D, state: State) => {
-    const [width, height] = [ctx.canvas.clientWidth, ctx.canvas.clientHeight];
-
+    // draw
+    const { ctx } = state;
     ctx.save();
     ctx.resetTransform();
 

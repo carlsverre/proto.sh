@@ -26,21 +26,22 @@
   "name": "proto",
   "author": "Carl Sverre",
   "devDependencies": {
+    "@types/d3-scale": "^3.2.1",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
     "@types/tinycolor2": "^1.4.2",
-    "@types/d3-scale": "^3.2.1",
+    "npm-check-updates": "^10.2.3",
     "parcel": "^1.12.4",
     "tsdx": "^0.14.1",
     "tslib": "^2.0.3",
-    "typescript": "^4.1.2",
-    "npm-check-updates": "^10.2.3"
+    "typescript": "^4.1.2"
   },
   "dependencies": {
     "@types/d3-ease": "^2.0.0",
     "d3-ease": "^2.0.0",
     "d3-scale": "^3.2.3",
     "node-pid-controller": "^1.0.1",
+    "pixi.js": "^5.3.6",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "simplex-noise": "^2.4.0"

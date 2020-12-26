@@ -1,18 +1,16 @@
-interface State {}
-
-export interface Scene {
-    name: string;
-
-    init(ctx: CanvasRenderingContext2D): State;
-    step(ctx: CanvasRenderingContext2D, state: State): void;
-    draw(ctx: CanvasRenderingContext2D, state: State): void;
-}
+import { Scene } from "../render";
 
 import * as TrailsScene from "./trails";
 import * as WavesScene from "./waves";
 import * as WallpaperScene from "./wallpaper";
+import * as ShapesScene from "./shapes";
 
-export const scenes: Scene[] = [TrailsScene, WavesScene, WallpaperScene];
+export const scenes: Scene[] = [
+    TrailsScene,
+    WavesScene,
+    WallpaperScene,
+    ShapesScene,
+];
 
 export function loadScene(name: string): Scene | undefined {
     for (let scene of scenes) {

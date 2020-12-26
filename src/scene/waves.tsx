@@ -3,6 +3,10 @@ import { scaleLinear, scaleQuantize } from "d3-scale";
 import { colorsHex } from "./colors";
 import PID from "node-pid-controller";
 import clamp from "../util/clamp";
+import { Env } from "../render";
+
+export const name = "waves";
+export const engine = "canvas2d";
 
 const TIME_DELTA = 0.003;
 const TARGET_FRAME_RATE = 60;
@@ -29,9 +33,8 @@ const turbulence = (x: number, y: number, size: number): number => {
     return (128.0 * value) / initialSize;
 };
 
-export const name = "waves";
-
 type State = {
+    ctx: CanvasRenderingContext2D;
     time: number;
     lastFrame: number;
     frameTimes: [];
@@ -41,11 +44,12 @@ type State = {
     pid: PID;
 };
 
-export const init = (_: CanvasRenderingContext2D): State => {
+export const setup = (_: Env, ctx: CanvasRenderingContext2D): State => {
     const pid = new PID({ k_p: 0.01, k_i: 0.001, k_d: 0.001, i_max: 10 });
     pid.setTarget(TARGET_FRAME_RATE);
 
     return {
+        ctx: ctx,
         time: Math.random(),
         lastFrame: +new Date(),
         frameTimes: [],
@@ -56,7 +60,10 @@ export const init = (_: CanvasRenderingContext2D): State => {
     };
 };
 
-export const step = (_: CanvasRenderingContext2D, state: State) => {
+export const update = (env: Env, _: number, state: State) => {
+    const { width, height } = env;
+    const { ctx } = state;
+
     const now = +new Date();
     const delta = state.pid.update(1000 / (now - state.lastFrame));
     state.lastFrame = now;
@@ -64,13 +71,9 @@ export const step = (_: CanvasRenderingContext2D, state: State) => {
     state.pixelSize = Math.round(clamp(state.pixelSize + delta, 3, 30));
 
     state.time += TIME_DELTA;
-};
 
-export const draw = (ctx: CanvasRenderingContext2D, state: State) => {
     ctx.save();
     ctx.resetTransform();
-
-    const [width, height] = [ctx.canvas.clientWidth, ctx.canvas.clientHeight];
 
     const periodBase = 3;
     const period = unitToRad(state.time % periodBase);

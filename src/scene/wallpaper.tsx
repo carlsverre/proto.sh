@@ -3,10 +3,13 @@ import { hexToRGB, RGB } from "../util/color";
 import SimplexNoise from "simplex-noise";
 import { Memo, initMemo, stepMemo } from "../util/memo";
 import { scaleLinear } from "d3-scale";
+import { Env } from "../render";
 
 export const name = "wallpaper";
+export const engine = "canvas2d";
 
 type State = {
+    ctx: CanvasRenderingContext2D;
     noise: SimplexNoise;
     noiseMemo: Memo<ImageData>;
 };
@@ -35,15 +38,15 @@ const turbulence = (
     return (128.0 * value) / initialSize;
 };
 
-export const init = (_: CanvasRenderingContext2D): State => ({
+export const setup = (_: Env, ctx: CanvasRenderingContext2D): State => ({
+    ctx,
     noise: new SimplexNoise(Math.random),
     noiseMemo: initMemo(),
 });
 
-export const step = () => {};
-
-export const draw = (ctx: CanvasRenderingContext2D, state: State) => {
-    const [width, height] = [ctx.canvas.clientWidth, ctx.canvas.clientHeight];
+export const update = (env: Env, _: number, state: State) => {
+    const { width, height } = env;
+    const { ctx } = state;
 
     ctx.save();
     ctx.resetTransform();
