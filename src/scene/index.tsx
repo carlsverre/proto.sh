@@ -12,7 +12,7 @@ export const scenes: Scene[] = [
     ShapesScene,
 ];
 
-export function loadScene(name: string): Scene | undefined {
+export function loadScene(name: string | undefined): Scene | undefined {
     for (let scene of scenes) {
         if (scene.name === name) {
             return scene;

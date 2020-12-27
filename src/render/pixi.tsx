@@ -26,6 +26,7 @@ export const Pixi = ({ scene, size }: Props) => {
                     const config = {
                         antialias: true,
                         transparent: false,
+                        backgroundColor: 0xffffff,
                     };
                     if (size) {
                         return {
@@ -45,6 +46,7 @@ export const Pixi = ({ scene, size }: Props) => {
             container.appendChild(app.view);
 
             let state = scene.setup(makeEnv(app));
+            app.stage.addChild(state.scene);
             if (scene.update) {
                 app.ticker.add((delta: number) =>
                     scene.update
@@ -54,6 +56,7 @@ export const Pixi = ({ scene, size }: Props) => {
             }
 
             return () => {
+                app.stage.removeChild(state.scene);
                 if (scene.destroy) {
                     scene.destroy(makeEnv(app), state);
                 }

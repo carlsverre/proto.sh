@@ -38,12 +38,14 @@
   },
   "dependencies": {
     "@types/d3-ease": "^2.0.0",
+    "@types/victor": "^1.1.0",
     "d3-ease": "^2.0.0",
     "d3-scale": "^3.2.3",
     "node-pid-controller": "^1.0.1",
     "pixi.js": "^5.3.6",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
-    "simplex-noise": "^2.4.0"
+    "simplex-noise": "^2.4.0",
+    "victor": "^1.1.0"
   }
 }

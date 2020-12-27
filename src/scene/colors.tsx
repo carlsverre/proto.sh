@@ -1,4 +1,4 @@
-import { hexToRGB } from "../util/color";
+import { hexToRGB, rgbToNumber } from "../util/color";
 
 export const colorsHex = [
     "#1DB0FD",
@@ -19,3 +19,5 @@ export const colorsHex = [
 ];
 
 export const colorsRGB = colorsHex.map(hexToRGB);
+
+export const colorsNum = colorsRGB.map(rgbToNumber);

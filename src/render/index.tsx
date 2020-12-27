@@ -3,14 +3,18 @@ export interface Env {
     height: number;
 }
 
+interface BaseScene {
+    name: string;
+    expensive?: boolean;
+}
+
 import * as PIXI from "pixi.js";
 
 interface PixiState {
     scene: PIXI.Container;
 }
 
-export interface PixiScene {
-    name: string;
+export interface PixiScene extends BaseScene {
     engine: "pixi";
 
     setup(env: Env): PixiState;
@@ -20,8 +24,7 @@ export interface PixiScene {
 
 interface Canvas2DState {}
 
-export interface Canvas2DScene {
-    name: string;
+export interface Canvas2DScene extends BaseScene {
     engine: "canvas2d";
 
     setup(env: Env, ctx: CanvasRenderingContext2D): Canvas2DState;

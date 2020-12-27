@@ -1,18 +1,19 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
+import { Scene } from "../src/render";
 import { Surface } from "../src/render/surface";
-import { scenes, loadScene, Scene } from "../src/scene";
+import { scenes, loadScene } from "../src/scene";
 import { Size } from "../src/hook/useWindowSize";
 import { useState, useEffect } from "react";
 import clamp from "../src/util/clamp";
 
-const parseQuery = (key: string): string => {
+const parseQuery = (key: string): string | undefined => {
     let kv = window.location.search
         .substr(1)
         .split("&")
         .map(v => v.split("="))
         .find(([k, _]) => k === key);
-    return kv && kv[1];
+    return kv ? kv[1] : undefined;
 };
 
 const getInitialScene = (): Scene => {
@@ -20,11 +21,14 @@ const getInitialScene = (): Scene => {
 };
 
 const getSurfaceSize = (): Size | undefined => {
-    const width = clamp(parseInt(parseQuery("w")) || 0, 0, 10000);
-    const height = clamp(parseInt(parseQuery("h")) || 0, 0, 10000);
-    if (width && height) {
+    const rawWidth = parseQuery("w");
+    const rawHeight = parseQuery("h");
+    if (rawWidth && rawHeight) {
+        const width = clamp(parseInt(rawWidth) || 0, 0, 10000);
+        const height = clamp(parseInt(rawHeight) || 0, 0, 10000);
         return { width, height };
     }
+    return;
 };
 
 const App = () => {
@@ -44,7 +48,7 @@ const App = () => {
             let nextScene = scenes[0];
             while (true) {
                 nextScene = scenes[++i % scenes.length];
-                if (nextScene.name !== "wallpaper") {
+                if (!nextScene.expensive) {
                     break;
                 }
             }

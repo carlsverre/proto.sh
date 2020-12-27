@@ -7,6 +7,7 @@ import { Env } from "../render";
 
 export const name = "wallpaper";
 export const engine = "canvas2d";
+export const expensive = true;
 
 type State = {
     ctx: CanvasRenderingContext2D;

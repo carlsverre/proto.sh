@@ -1,13 +1,15 @@
 import * as React from "react";
 import { Scene } from ".";
+import { Size } from "../hook/useWindowSize";
 
 // engines
 import { Canvas2D } from "./canvas2d";
 import { Pixi } from "./pixi";
 
-interface Props {
+type Props = {
     scene: Scene;
-}
+    size?: Size;
+};
 
 export const Surface = ({ scene, ...props }: Props) => {
     switch (scene.engine) {

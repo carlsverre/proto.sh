@@ -24,3 +24,6 @@ export const hexToRGB = (hex: string): RGB => {
 
 export const rgbToString = (rgb: RGB, alpha: number = 1): string =>
     `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${alpha})`;
+
+export const rgbToNumber = ({ r, g, b }: RGB): number =>
+    (1 << 24) + (r << 16) + (g << 8) + b;
