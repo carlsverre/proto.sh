@@ -16,10 +16,6 @@ const parseQuery = (key: string): string | undefined => {
     return kv ? kv[1] : undefined;
 };
 
-const getInitialScene = (): Scene => {
-    return loadScene(parseQuery("s")) || scenes[0];
-};
-
 const getInitialSceneIndex = (): number => {
     const initialSceneName = parseQuery("s") || scenes[0].name;
     for (let i = 0; i < scenes.length; i++) {

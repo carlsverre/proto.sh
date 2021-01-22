@@ -8,6 +8,9 @@ export const engine = "pixi";
 
 type State = {
     scene: PIXI.Container;
+    env: Env;
+    sceneHistory: PIXI.DisplayObject[];
+    current?: PIXI.DisplayObject;
 };
 
 const randomColor = (): number =>
@@ -15,18 +18,114 @@ const randomColor = (): number =>
 
 export const setup = (env: Env): State => {
     const scene = new PIXI.Container();
+    scene.sortableChildren = true;
 
-    const num = Math.max(2, Math.floor(Math.random() * 6));
-    for (let i = 0; i < num; i++) {
-        Math.random() > 0.5
-            ? scene.addChild(makeRectangle(env))
-            : scene.addChild(makeCircle(env));
-    }
+    const state: State = { scene, env, sceneHistory: [] };
 
-    return { scene };
+    const generators = [makeRectangle, makeCircle];
+
+    let buttons = new PIXI.Container();
+    buttons.x = 5;
+    buttons.y = 5;
+    buttons.zIndex = 999;
+    scene.addChild(buttons);
+
+    const renderButtons = () => {
+        const buttonSize = 20;
+        const buttonMargin = 5;
+
+        buttons.removeChildren();
+
+        if (state.sceneHistory.length <= 1) {
+            return;
+        }
+
+        for (let i = 0; i < state.sceneHistory.length; i++) {
+            const container = state.sceneHistory[i];
+
+            let button = new PIXI.Graphics();
+            buttons.addChild(button);
+
+            button.x = i * (buttonSize + buttonMargin);
+
+            button.beginFill(0xffffff);
+            button.drawCircle(buttonSize / 2, buttonSize / 2, buttonSize / 2);
+            button.endFill();
+
+            if (container === state.current) {
+                button.beginFill(0x0);
+                button.drawCircle(buttonSize / 2, buttonSize / 2, 3);
+                button.endFill();
+            }
+
+            button.addListener("click", (evt: PIXI.InteractionEvent) => {
+                switchScene(container);
+            });
+            button.interactive = true;
+        }
+    };
+
+    const switchScene = (target: PIXI.DisplayObject) => {
+        let current = state.current;
+        if (current) {
+            scene.removeChild(current);
+        }
+        scene.addChild(target);
+        state.current = target;
+        renderButtons();
+    };
+
+    const nextScene = () => {
+        if (state.current) {
+            scene.removeChild(state.current);
+        }
+
+        let container = new PIXI.Container();
+        scene.addChild(container);
+        state.sceneHistory.push(container);
+        if (state.sceneHistory.length > 100) {
+            state.sceneHistory = state.sceneHistory.slice(
+                state.sceneHistory.length - 10
+            );
+        }
+        state.current = container;
+
+        let bg = new PIXI.Graphics();
+        bg.beginFill(randomColor());
+        bg.drawRect(0, 0, state.env.width, state.env.height);
+        bg.endFill();
+        container.addChild(bg);
+
+        const num = Math.max(2, Math.floor(Math.random() * 6));
+        for (let i = 0; i < num; i++) {
+            for (let j = 0; j < generators.length; j++) {
+                if (Math.random() < 0.5) {
+                    container.addChild(generators[j](state.env));
+                }
+            }
+        }
+
+        renderButtons();
+    };
+
+    scene.addListener("click", (evt: PIXI.InteractionEvent) => {
+        if (evt.target === scene) {
+            nextScene();
+        }
+    });
+    scene.interactive = true;
+
+    nextScene();
+
+    return state;
 };
 
-export const update = (_env: Env, _delta: number, _state: State) => {};
+export const update = (env: Env, _delta: number, state: State) => {
+    if (state.env.width !== env.width || state.env.height !== env.height) {
+        state.env = env;
+        state.scene.hitArea = new PIXI.Rectangle(0, 0, env.width, env.height);
+    }
+};
 
 const makeRectangle = (env: Env): PIXI.Graphics => {
     // pick a starting x & y position somewhere around the center
@@ -75,32 +174,15 @@ const makeRectangle = (env: Env): PIXI.Graphics => {
 };
 
 const makeCircle = (env: Env): PIXI.Graphics => {
-    // top = 0, right = 1, bottom = 2, left = 3
-    const side = Math.floor(Math.random() * 4);
+    let circleCenter = new V(
+        Math.random() * env.width,
+        Math.random() * env.height
+    ).unfloat();
+
     const radius = Math.max(
-        Math.min(env.width, env.height) / 4,
+        50,
         Math.floor((Math.random() * Math.min(env.width, env.height)) / 2)
     );
-
-    let circleCenter = new V(env.width, env.height).divideScalar(2).unfloat();
-    switch (side) {
-        // top
-        case 0:
-            circleCenter.y = 0;
-            break;
-        // right
-        case 1:
-            circleCenter.x = env.width;
-            break;
-        // bottom
-        case 2:
-            circleCenter.y = env.height;
-            break;
-        // left
-        case 3:
-            circleCenter.x = 0;
-            break;
-    }
 
     let el = new PIXI.Graphics();
     el.beginFill(randomColor());
