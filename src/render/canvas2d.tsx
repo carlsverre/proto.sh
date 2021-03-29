@@ -22,6 +22,7 @@ export const Canvas2D = ({ scene, size }: Props) => {
         if (canvasRef.current && surfaceSize) {
             const canvas = canvasRef.current;
             const ctx = canvas.getContext("2d");
+
             if (ctx) {
                 let running = true;
                 let state = scene.setup(makeEnv(ctx), ctx);

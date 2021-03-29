@@ -1,20 +1,11 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
-import { Scene } from "../src/render";
 import { Surface } from "../src/render/surface";
-import { scenes, loadScene } from "../src/scene";
+import { scenes } from "../src/scene";
 import { Size } from "../src/hook/useWindowSize";
 import { useMemo, useState, useEffect } from "react";
+import { parseQuery, setRandom } from "../src/util/query";
 import clamp from "../src/util/clamp";
-
-const parseQuery = (key: string): string | undefined => {
-    let kv = window.location.search
-        .substr(1)
-        .split("&")
-        .map(v => v.split("="))
-        .find(([k, _]) => k === key);
-    return kv ? kv[1] : undefined;
-};
 
 const getInitialSceneIndex = (): number => {
     const initialSceneName = parseQuery("s") || scenes[0].name;
@@ -51,6 +42,7 @@ const App = () => {
                     (nextSceneIndex + (right ? 1 : -1) + scenes.length) %
                     scenes.length;
             } while (scenes[nextSceneIndex].expensive);
+            setRandom();
             setSceneIndex(nextSceneIndex);
         };
 
@@ -74,4 +66,5 @@ const App = () => {
     return <Surface scene={scene} size={sceneSize} />;
 };
 
+setRandom();
 ReactDOM.render(<App />, document.getElementById("root"));
