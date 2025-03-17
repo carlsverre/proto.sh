@@ -2,7 +2,7 @@ import seedrandom from "seedrandom";
 
 export const parseQuery = (key: string): string | undefined => {
     let kv = window.location.search
-        .substr(1)
+        .substring(1)
         .split("&")
         .map(v => v.split("="))
         .find(([k, _]) => k === key);

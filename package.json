@@ -1,51 +1,39 @@
 {
-  "version": "0.1.0",
-  "license": "MIT",
-  "main": "dist/index.js",
-  "typings": "dist/index.d.ts",
-  "files": [
-    "dist",
-    "src"
-  ],
-  "engines": {
-    "node": ">=10"
-  },
-  "scripts": {
-    "start": "parcel www/index.html",
-    "build": "parcel build www/index.html",
-    "lint": "tsdx lint"
-  },
-  "peerDependencies": {
-    "react": ">=17"
-  },
-  "prettier": {
-    "semi": true,
-    "trailingComma": "es5",
-    "tabWidth": 4
-  },
-  "name": "proto",
-  "author": "Carl Sverre",
-  "devDependencies": {
-    "@types/d3-scale": "^3.2.1",
-    "@types/react": "^17.0.0",
-    "@types/react-dom": "^17.0.0",
-    "@types/dom-mediacapture-record": "^1.0.7",
-    "@types/seedrandom": "^3.0.0",
-    "@types/victor": "^1.1.0",
-    "@types/wicg-file-system-access": "^2020.9.1",
-    "npm-check-updates": "^10.2.3",
-    "parcel": "^1.12.4",
-    "tsdx": "^0.14.1",
-    "tslib": "^2.0.3",
-    "typescript": "^4.1.2"
-  },
-  "dependencies": {
-    "d3-scale": "^3.2.3",
-    "pixi.js": "^5.3.6",
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1",
-    "seedrandom": "^3.0.5",
-    "simplex-noise": "^2.4.0",
-    "victor": "^1.1.0"
-  }
+    "version": "0.1.0",
+    "license": "MIT",
+    "scripts": {
+        "start": "parcel www/index.html",
+        "build": "parcel build www/index.html",
+        "lint": "tsdx lint"
+    },
+    "prettier": {
+        "semi": true,
+        "trailingComma": "es5",
+        "tabWidth": 4
+    },
+    "name": "proto",
+    "author": "Carl Sverre",
+    "devDependencies": {
+        "@types/d3-scale": "^3.2.1",
+        "@types/dom-mediacapture-record": "^1.0.7",
+        "@types/react": "^17.0.0",
+        "@types/react-dom": "^17.0.0",
+        "@types/seedrandom": "^3.0.0",
+        "@types/victor": "^1.1.0",
+        "@types/wicg-file-system-access": "^2020.9.1",
+        "npm-check-updates": "^17.1.15",
+        "parcel": "^2.13.3",
+        "process": "^0.11.10",
+        "tsdx": "^0.14.1",
+        "tslib": "^2.0.3",
+        "typescript": "^4.1.2"
+    },
+    "dependencies": {
+        "d3-scale": "^4.0.2",
+        "react": ">=17",
+        "react-dom": "^17.0.1",
+        "seedrandom": "^3.0.5",
+        "simplex-noise": "^2.4.0",
+        "victor": "^1.1.0"
+    }
 }

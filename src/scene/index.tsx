@@ -2,15 +2,8 @@ import { Scene } from "../render";
 
 import * as TrailsScene from "./trails";
 import * as WavesScene from "./waves";
-import * as WallpaperScene from "./wallpaper";
-import * as ShapesScene from "./shapes";
 
-export const scenes: Scene[] = [
-    TrailsScene,
-    WavesScene,
-    WallpaperScene,
-    ShapesScene,
-];
+export const scenes: Scene[] = [TrailsScene, WavesScene];
 
 export function loadScene(name: string | undefined): Scene | undefined {
     for (let scene of scenes) {

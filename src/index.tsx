@@ -1,11 +1,11 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
-import { Surface } from "../src/render/surface";
-import { scenes } from "../src/scene";
-import { Size } from "../src/hook/useWindowSize";
+import { Surface } from "./render/surface";
+import { scenes } from "./scene";
+import { Size } from "./hook/useWindowSize";
 import { useMemo, useState, useEffect } from "react";
-import { parseQuery, setRandom } from "../src/util/query";
-import clamp from "../src/util/clamp";
+import { parseQuery, setRandom } from "./util/query";
+import clamp from "./util/clamp";
 
 const getInitialSceneIndex = (): number => {
     const initialSceneName = parseQuery("s") || scenes[0].name;
